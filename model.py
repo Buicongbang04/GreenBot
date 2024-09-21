@@ -1,22 +1,19 @@
-import openai
-from torch.backends.quantized import engine
+from g4f.client import Client
+import warnings
+warnings.filterwarnings("ignore")
 
-# Cấu hình API key
-# openai.api_key = "...."
-
-# Model's response
-messages = [
-    {"role": "system", "content": "You are a kindly and helpful assistant!"},
-]
+client = Client()
 
 def get_response(prompt):
-    messages.append({"role": "user", "content": prompt})
-    chat = openai.ChatCompletion.create(
-        model='gpt-3.5-turbo',
-        messages=messages,
+    response = client.chat.completions.create(
+        model = 'gpt-3.5-turbo',
+        messages = [
+            {'role': 'user',
+             'content': prompt}
+        ]
     )
 
-    return chat.choices[0].messages.content
+    return response.choices[0].message.content
 
 def chatbot():
     print("Welcome to chatbot")
@@ -28,6 +25,6 @@ def chatbot():
 
         response = get_response(user_input)
         print(f"Bot: {response}")
-        messages.append({"role": "system", "content": response})
+
 
 chatbot()

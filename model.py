@@ -2,7 +2,7 @@ import openai
 from torch.backends.quantized import engine
 
 # Cấu hình API key
-# openai.api_key = "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"
+# openai.api_key = "...."
 
 # Model's response
 messages = [
